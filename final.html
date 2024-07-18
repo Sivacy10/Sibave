@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who is the prettiest girl in the world?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f3f4;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .search-bar {
+            width: 100%;
+            max-width: 640px;
+            padding: 14px;
+            border: 1px solid #dcdcdc;
+            border-radius: 24px;
+            font-size: 18px;
+            margin: 0 auto 20px auto;
+            display: block;
+        }
+        .search-bar:focus {
+            outline: none;
+            border-color: #4285f4;
+        }
+        .results {
+            border-top: 1px solid #dcdcdc;
+            padding-top: 20px;
+        }
+        .result {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #dcdcdc;
+            padding-bottom: 20px;
+            overflow: hidden;
+        }
+        .result h2 {
+            font-size: 18px;
+            margin: 0;
+            color: #1a0dab;
+        }
+        .result img {
+            max-width: 150px;
+            border-radius: 8px;
+            float: left;
+            margin-right: 15px;
+        }
+        .result p {
+            margin: 0;
+            color: #4d5156;
+        }
+        .result .read-more {
+            color: #1a0dab;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        .result .read-more:hover {
+            text-decoration: underline;
+        }
+        .footer {
+            margin-top: 30px;
+            border-top: 1px solid #dcdcdc;
+            padding-top: 10px;
+            color: #70757a;
+            font-size: 14px;
+        }
+
+        /* Animation styles */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: #fff;
+            border: 2px solid #1a0dab;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a0dab;
+            opacity: 0;
+            visibility: hidden;
+            animation: popin 1s forwards, fadeout 5s 1s forwards;
+        }
+
+        @keyframes popin {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeout {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Animation -->
+        <div class="popup">Give me my million dollars!</div>
+        
+        <!-- Google-like search bar -->
+        <input type="text" class="search-bar" value="Who is the prettiest girl in the world?" readonly>
+        
+        <!-- Search results -->
+        <div class="results" id="results">
+            <!-- JavaScript will populate this area -->
+        </div>
+        
+        <div class="footer">
+            <p>About · Help · Privacy · Terms</p>
+        </div>
+    </div>
+
+    <script>
+        // Array of image URLs
+        const images = [
+            "https://i.imgur.com/ChSuhOP.jpeg", // Tariro
+            "https://i.imgur.com/aOAF9oN.jpeg", // Additional images
+            "https://i.imgur.com/qXS4HtX.jpeg",
+            "https://i.imgur.com/MePYPmz.jpeg",
+        ];
+
+        // Array of names
+        const names = [
+            "Tariro",
+            "Sasha", "Lena", "Maria", "Jasmine", "Elena",
+            "Sophia", "Olivia", "Emma", "Ava", "Mia", "Isabella"
+        ];
+
+        // Array of descriptions
+        const descriptions = [
+            "Tariro is known for her enchanting smile and graceful demeanor. She stays in Texas and her presence lights up every room she enters, making her a standout personality in any crowd. She has a passion for fashion and design, which she pursues with great enthusiasm.",
+            "Sasha has a vibrant personality and a keen sense of humor. Her infectious laugh and positive energy make her a favorite among her friends and family. She is an avid traveler who loves to explore new cultures and cuisines.",
+            "Lena is admired for her intelligence and creativity. A talented artist, she spends her free time painting and creating beautiful works of art. Her unique perspective and artistic vision make her stand out in the creative community.",
+            "Maria's elegance and poise are truly remarkable. She has a deep appreciation for classical music and often spends her weekends attending concerts and performances. Her refined taste and sophistication are evident in everything she does.",
+            "Jasmine's adventurous spirit and love for the outdoors make her a true nature enthusiast. She enjoys hiking, camping, and exploring new trails. Her adventurous lifestyle and love for the environment are an inspiration to many.",
+            "Elena is known for her dedication to community service. She actively volunteers at various local organizations and is passionate about making a positive impact in her community. Her selflessness and compassion are truly commendable.",
+            "Sophia combines beauty with brains. An accomplished student, she excels academically and is involved in several extracurricular activities. Her commitment to her studies and her leadership skills make her a role model for her peers.",
+            "Olivia's charm and charisma are hard to miss. She has a talent for public speaking and often participates in debates and presentations. Her confidence and eloquence make her a natural leader and influencer.",
+            "Emma's creativity shines through in her writing. She is an aspiring author with a flair for storytelling. Her imaginative narratives and captivating prose have garnered praise from readers and critics alike.",
+            "Ava's athleticism and competitive spirit are truly impressive. A dedicated athlete, she excels in various sports and has won numerous awards for her achievements. Her discipline and determination are qualities that set her apart.",
+            "Mia is a fashionista with a keen eye for style. She has a blog where she shares her fashion tips and trends. Her unique sense of fashion and her ability to mix and match outfits make her a trendsetter in the fashion world.",
+            "Isabella's dedication to her craft is evident in her culinary creations. As a chef, she experiments with different ingredients and cuisines to create delicious and innovative dishes. Her passion for cooking is matched only by her love for sharing her food with others."
+        ];
+
+        // Get the results container
+        const resultsContainer = document.getElementById('results');
+
+        // Create and add search results
+        function addSearchResult(index, imageUrl) {
+            const resultDiv = document.createElement('div');
+            resultDiv.classList.add('result');
+
+            // Determine name and description
+            const name = index === 0 ? names[0] : names[Math.floor(Math.random() * (names.length - 1)) + 1];
+            const description = descriptions[index] || "This person is recognized as a top contender in the search. More details can be found in our extensive list.";
+
+            resultDiv.innerHTML = `
+                <h2>${index + 1}. ${name}</h2>
+                <img src="${imageUrl}" alt="${name}">
+                <p>${description}</p>
+                <a href="#" class="read-more">Read More</a>
+            `;
+
+            resultsContainer.appendChild(resultDiv);
+        }
+
+        // Add results to the page
+        for (let i = 0; i < images.length; i++) {
+            addSearchResult(i, images[i]);
+        }
+    </script>
+</body>
+</html>
